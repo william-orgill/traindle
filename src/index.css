@@ -112,6 +112,7 @@ input {
 .station-table td {
   padding: 10px 10px 7px 10px;
   position: relative;
+  color: white;
 }
 
 .station-table th {

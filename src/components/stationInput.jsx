@@ -6,10 +6,13 @@ const stationInput = ({ onStationSelect, suggestions, answer, onWin }) => {
   const [activeSuggestionIndex, setActiveSuggestionIndex] = React.useState(0);
   const [showSuggestions, setShowSuggestions] = React.useState(false);
 
+  const suggestionRefs = React.useRef([]);
+
   const handleChange = (e) => {
     const userInput = e.target.value;
     const filtered = suggestions.filter(
-      (suggestion) => suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+      (suggestion) =>
+        suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
 
     setInput(userInput);
@@ -20,12 +23,12 @@ const stationInput = ({ onStationSelect, suggestions, answer, onWin }) => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      if (input === '' ) {
+      if (input === '') {
         return;
-      } 
+      }
       const selectedGuess = filteredSuggestions[activeSuggestionIndex];
       if (selectedGuess === answer) {
-        onWin(); 
+        onWin();
       }
       onStationSelect(selectedGuess);
       setInput('');
@@ -34,18 +37,22 @@ const stationInput = ({ onStationSelect, suggestions, answer, onWin }) => {
       if (activeSuggestionIndex === 0) {
         return;
       }
-      setActiveSuggestionIndex(activeSuggestionIndex - 1);
+      const newIndex = activeSuggestionIndex - 1;
+      setActiveSuggestionIndex(newIndex);
+      scrollToActiveSuggestion(newIndex);
     } else if (e.key === 'ArrowDown') {
       if (activeSuggestionIndex === filteredSuggestions.length - 1) {
         return;
       }
-      setActiveSuggestionIndex(activeSuggestionIndex + 1);
+      const newIndex = activeSuggestionIndex + 1;
+      setActiveSuggestionIndex(newIndex);
+      scrollToActiveSuggestion(newIndex);
     }
   };
 
   const handleClick = (suggestion) => {
     if (suggestion === answer) {
-      onWin(); 
+      onWin();
     }
     onStationSelect(suggestion);
     setInput('');
@@ -63,6 +70,14 @@ const stationInput = ({ onStationSelect, suggestions, answer, onWin }) => {
     }, 100);
   };
 
+  const scrollToActiveSuggestion = (index) => {
+    if (suggestionRefs.current[index]) {
+      suggestionRefs.current[index].scrollIntoView({
+        block: 'nearest',
+      });
+    }
+  };
+
   const renderSuggestions = () => {
     if (showSuggestions && input) {
       if (filteredSuggestions.length) {
@@ -71,7 +86,12 @@ const stationInput = ({ onStationSelect, suggestions, answer, onWin }) => {
             {filteredSuggestions.map((suggestion, index) => (
               <li
                 key={suggestion}
-                className={index === activeSuggestionIndex ? 'suggestion-active' : 'suggestion-unactive'}
+                ref={(el) => (suggestionRefs.current[index] = el)}
+                className={
+                  index === activeSuggestionIndex
+                    ? 'suggestion-active'
+                    : 'suggestion-unactive'
+                }
                 onMouseEnter={() => handleHover(index)}
                 onClick={() => handleClick(suggestion)}
               >
@@ -89,20 +109,20 @@ const stationInput = ({ onStationSelect, suggestions, answer, onWin }) => {
 
   return (
     <div className="autocomplete">
-      <input 
-        id="myInput" 
-        type="text" 
-        name="stationGuess" 
+      <input
+        id="myInput"
+        type="text"
+        name="stationGuess"
         placeholder="Station"
         value={input}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}
-        autocomplete="off"
+        autoComplete="off"
       />
       {renderSuggestions()}
     </div>
-  )
-}
+  );
+};
 
 export default stationInput;
