@@ -54,7 +54,7 @@ function Game() {
           {hasWon ? (
             <div className="autocomplete">
               <div className="win-message">
-              🎉 Congratulations! You guessed the correct station: {answer}
+              🎉 Congratulations! You guessed the correct station: {answer} in {selectedStations.length} tries! 🎉
               </div>
             </div>
           ) : (
