@@ -435,7 +435,7 @@ const trainNetwork = {
     "dist": 3.41,
     "lines": ["T4"],
     "users": 341581,
-    "adjacent": ["Penrith Station", "Werrington Station"]
+    "adjacent": ["Martin Place Station", "Edgecliff Station"]
   },
   "Kingsgrove Station": {
     "dist": 12.62,

@@ -60,7 +60,7 @@ const StationTable = ({ selectedStations, answer }) => {
         <thead>
           <tr>
             <th style={{ width: "170px" }}>Station</th>
-            <th style={{ width: "150px" }}>Lines</th>
+            <th style={{ width: "160px" }}>Lines</th>
             <th style={{ width: "170px" }}>Rail distance from Central Station</th>
             <th style={{ width: "120px" }}>Average monthly users</th>
             <th style={{ width: "80px" }}>Stations away</th>
@@ -80,7 +80,7 @@ const StationTable = ({ selectedStations, answer }) => {
               >
                 {trainNetwork[station]['lines'].map((line, index) => (
                   <span className='lines'>
-                    <img key={index} src={"/TfNSW_"+line+".svg"} width="30px" alt={line}/>
+                    <img key={index} src={line+".svg"} width="30px" alt={line}/>
                   </span>
                 ))}
               </td>

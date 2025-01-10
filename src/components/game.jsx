@@ -14,9 +14,9 @@ function Game() {
     const storedDate = localStorage.getItem('gameDate');
     const storedGuesses = JSON.parse(localStorage.getItem('selectedStations')) || [];
     const storedHasWon = JSON.parse(localStorage.getItem('won')) || false;
-    //const today = new Date().toISOString().split('T')[0];;
-    const mockDate = new Date('2025-01-05');
-    const today = mockDate.toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0];;
+    //const mockDate = new Date('2025-01-05');
+    //const today = mockDate.toISOString().split('T')[0];
 
     if (storedDate === today) {
       setAnswer(localStorage.getItem('answer'));
